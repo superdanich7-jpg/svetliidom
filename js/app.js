@@ -99,7 +99,7 @@
           </div>
           <div class="card__actions">
             <button class="btn btn--ghost" data-details="${ap.slug}">Подробнее</button>
-            <a href="#booking" class="btn btn--primary" data-book="${ap.name}">Забронировать</a>
+            <button type="button" class="btn btn--primary" data-book-id="${ap.id}">Забронировать</button>
           </div>
         </div>
       </div>
@@ -264,7 +264,7 @@
       <div class="modal__price-row">
         <div><b>от ${fmt(ap.price)} ₽</b><small>за сутки · скидка от 7 ночей</small></div>
         <div class="btns">
-          <a href="#booking" class="btn btn--primary" data-book="${ap.name}">Забронировать</a>
+          <button type="button" class="btn btn--primary" data-book-id="${ap.id}">Забронировать</button>
           <a href="tel:${SITE.phoneRaw}" class="btn btn--ghost btn--sm">Позвонить</a>
         </div>
       </div>`;
@@ -288,15 +288,13 @@
 
     if (e.target.closest("[data-modal-close]")) { closeModal(); return; }
 
-    // «Забронировать» — скроллим точно к форме брони (списку виджета,
-    // где у каждой квартиры своя кнопка бронирования)
-    if (e.target.closest("[data-book]") || e.target.closest('a[href="#booking"]')) {
+    // «Забронировать» — открываем официальную модалку Homereserve
+    // для выбранной квартиры (единый каталог, без второй витрины).
+    const bookBtn = e.target.closest("[data-book-id]");
+    if (bookBtn) {
+      e.preventDefault();
       closeModal();
-      const target = document.querySelector(".booking__frame") || $("#booking");
-      if (target) {
-        if (e.target.closest("[data-book]")) e.preventDefault();
-        target.scrollIntoView({ behavior: "smooth" });
-      }
+      bookApartment(bookBtn.dataset.bookId, bookBtn);
     }
   });
 
@@ -625,17 +623,17 @@
     $("#apartments").scrollIntoView({ behavior: "smooth" });
   });
 
-  /* ---------- Виджет бронирования: отложенная загрузка ---------- */
-  // Модуль Homereserve — единственная тяжёлая внешняя зависимость.
-  // Грузим его только когда пользователь доскроллил близко к блоку
-  // «Онлайн-бронирование» или нажал «Забронировать»: LCP/INP на мобильных
-  // заметно лучше, а сам блок остаётся лениво-инициализированным.
+  /* ---------- Виджет бронирования: только официальная модалка ---------- */
+  // Единый каталог — наш собственный. Homereserve не показываем второй
+  // витриной: скрытый список нужен только чтобы по клику «Забронировать»
+  // открыть штатную модалку бронирования нужной квартиры (даты, оплата).
   const HR_CONFIG = {
     token: "mIv0zCf1D7",
     apartments: [211341, 221453, 194491, 194502, 175152, 177107, 177110, 228281,
       249949, 268020, 154055, 154038, 165638, 154037, 154048, 154040, 154044, 367051, 371097],
     navigation: false
   };
+  const hrShell = document.getElementById("hr-widget");
   let hrRequested = false;
   let hrInited = false;
 
@@ -643,14 +641,13 @@
     if (window.homereserve && window.homereserve.initWidgetList) {
       window.homereserve.initWidgetList(HR_CONFIG);
       hrInited = true;
-      startWidgetSweep();
     } else if (tries < 100) {
       setTimeout(function () { initHR(tries + 1); }, 150);
     }
   }
 
   function loadHRWidget() {
-    if (hrRequested || hrInited || !document.getElementById("hr-widget")) return;
+    if (hrRequested || hrInited || !hrShell) return;
     hrRequested = true;
     const s = document.createElement("script");
     s.type = "module";
@@ -660,23 +657,49 @@
     document.head.appendChild(s);
   }
 
-  const bookingSection = document.getElementById("booking");
-  if (bookingSection) {
-    if ("IntersectionObserver" in window) {
-      const hrObs = new IntersectionObserver(function (entries) {
-        if (entries.some(function (en) { return en.isIntersecting; })) {
-          hrObs.disconnect();
-          loadHRWidget();
-        }
-      }, { rootMargin: "600px 0px" });
-      hrObs.observe(bookingSection);
-    } else {
-      loadHRWidget();
+  // Находим карточку квартиры в скрытом списке и «нажимаем» её кнопку
+  // бронирования — Homereserve открывает свою модалку поверх страницы.
+  function openHRBooking(apId, attempt) {
+    if (!hrShell) return;
+    const cards = hrShell.querySelectorAll(".hotel-card");
+    if (cards.length) {
+      let target = null;
+      cards.forEach(function (c) {
+        const sw = c.querySelector("[data-swiper-id]");
+        if (sw && sw.getAttribute("data-swiper-id") === String(apId)) target = c;
+      });
+      const btn = target ? target.querySelector(".price-info__button") : null;
+      if (btn) { btn.click(); return; }
     }
-    // мгновенная подгрузка при клике на любую кнопку «Забронировать»
-    document.addEventListener("click", function (e) {
-      if (e.target.closest('[data-book], a[href="#booking"]')) loadHRWidget();
-    }, true);
+    if (attempt < 75) {
+      setTimeout(function () { openHRBooking(apId, attempt + 1); }, 200);
+    }
+  }
+
+  function bookApartment(apId, btn) {
+    if (!hrShell) return;
+    const originalText = btn ? btn.textContent : "";
+    if (btn) {
+      btn.classList.add("is-loading");
+      btn.setAttribute("aria-busy", "true");
+      btn.textContent = "Открываем бронирование…";
+    }
+    const restore = function () {
+      if (!btn) return;
+      btn.classList.remove("is-loading");
+      btn.removeAttribute("aria-busy");
+      btn.textContent = originalText;
+    };
+    loadHRWidget();
+    openHRBooking(apId, 0);
+    // возвращаем подпись кнопке, когда модалка открылась (или по таймауту)
+    let waited = 0;
+    const timer = setInterval(function () {
+      waited += 200;
+      const m = document.getElementById("hr-modal");
+      const visible = m && m.getBoundingClientRect().width > 0 && getComputedStyle(m).display !== "none";
+      if (visible || waited > 15000) { clearInterval(timer); restore(); }
+    }, 200);
   }
 
   /* ---------- Защита от недогруженных фото ---------- */

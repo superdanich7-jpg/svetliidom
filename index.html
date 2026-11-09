@@ -116,18 +116,18 @@
 
     <nav class="header__nav" aria-label="Основная навигация">
       <a href="#apartments">Апартаменты</a>
-      <a href="#locations">Локации</a>
       <a href="#benefits">Почему мы</a>
+      <a href="#locations">Локации</a>
       <a href="#business">Компаниям</a>
-      <a href="#rules">Правила</a>
       <a href="#faq">Вопросы</a>
+      <a href="#rules">Правила</a>
       <a href="#owners">Собственникам</a>
       <a href="#contacts">Контакты</a>
     </nav>
 
     <div class="header__right">
       <a class="header__phone" href="tel:+79013490792">+7 901 349-07-92</a>
-      <a href="#booking" class="btn btn--ghost header__cta">Забронировать</a>
+      <a href="#apartments" class="btn btn--ghost header__cta">Забронировать</a>
       <button class="burger" id="burger" aria-label="Открыть меню" aria-expanded="false"><span></span></button>
     </div>
   </div>
@@ -136,17 +136,17 @@
 <!-- Мобильное меню -->
 <div class="mobile-menu" id="mobileMenu" aria-hidden="true">
   <a class="mnav" href="#apartments">Апартаменты</a>
-  <a class="mnav" href="#locations">Локации</a>
   <a class="mnav" href="#benefits">Почему мы</a>
+  <a class="mnav" href="#locations">Локации</a>
   <a class="mnav" href="#business">Компаниям</a>
-  <a class="mnav" href="#rules">Правила</a>
   <a class="mnav" href="#faq">Вопросы</a>
+  <a class="mnav" href="#rules">Правила</a>
   <a class="mnav" href="#owners">Собственникам</a>
   <a class="mnav" href="#contacts">Контакты</a>
   <div class="mobile-menu__footer">
     <a href="tel:+79013490792" class="btn btn--primary btn--wide">+7 901 349-07-92</a>
     <a href="https://t.me/+79013490792" target="_blank" rel="noopener" class="btn btn--ghost btn--wide" data-menu-close>Написать в Telegram</a>
-    <a href="#booking" class="btn btn--ghost btn--wide" data-menu-close>Забронировать</a>
+    <a href="#apartments" class="btn btn--ghost btn--wide" data-menu-close>Забронировать</a>
   </div>
 </div>
 
@@ -224,7 +224,7 @@
         <span class="kicker">Каталог</span>
         <h2 class="h-xl" style="margin-top:14px">Выберите свои апартаменты</h2>
       </div>
-      <p class="lead reveal" data-delay="1">Все квартиры с ремонтом, техникой и всем необходимым. Цена за сутки снижается автоматически при бронировании от 7 ночей.</p>
+      <p class="lead reveal" data-delay="1">Все квартиры с ремонтом, техникой и всем необходимым. Цена за сутки снижается автоматически при бронировании от 7 ночей. Выберите даты в поиске наверху — или откройте бронирование прямо с карточки.</p>
     </div>
 
     <div class="filters reveal" id="filters" role="group" aria-label="Фильтр по локациям">
@@ -267,7 +267,7 @@
           </div>
           <div class="card__actions">
             <button class="btn btn--ghost" data-details="ellada">Подробнее</button>
-            <a href="#booking" class="btn btn--primary" data-book="Эллада">Забронировать</a>
+            <button type="button" class="btn btn--primary" data-book-id="211341">Забронировать</button>
           </div>
         </div>
       </div>
@@ -302,7 +302,7 @@
           </div>
           <div class="card__actions">
             <button class="btn btn--ghost" data-details="yalta">Подробнее</button>
-            <a href="#booking" class="btn btn--primary" data-book="Ялта">Забронировать</a>
+            <button type="button" class="btn btn--primary" data-book-id="221453">Забронировать</button>
           </div>
         </div>
       </div>
@@ -337,7 +337,7 @@
           </div>
           <div class="card__actions">
             <button class="btn btn--ghost" data-details="schastye">Подробнее</button>
-            <a href="#booking" class="btn btn--primary" data-book="Счастье">Забронировать</a>
+            <button type="button" class="btn btn--primary" data-book-id="194491">Забронировать</button>
           </div>
         </div>
       </div>
@@ -372,7 +372,7 @@
           </div>
           <div class="card__actions">
             <button class="btn btn--ghost" data-details="fiolent">Подробнее</button>
-            <a href="#booking" class="btn btn--primary" data-book="Фиолент">Забронировать</a>
+            <button type="button" class="btn btn--primary" data-book-id="194502">Забронировать</button>
           </div>
         </div>
       </div>
@@ -407,7 +407,7 @@
           </div>
           <div class="card__actions">
             <button class="btn btn--ghost" data-details="fortuna">Подробнее</button>
-            <a href="#booking" class="btn btn--primary" data-book="Фортуна">Забронировать</a>
+            <button type="button" class="btn btn--primary" data-book-id="175152">Забронировать</button>
           </div>
         </div>
       </div>
@@ -442,7 +442,7 @@
           </div>
           <div class="card__actions">
             <button class="btn btn--ghost" data-details="garmoniya">Подробнее</button>
-            <a href="#booking" class="btn btn--primary" data-book="Гармония">Забронировать</a>
+            <button type="button" class="btn btn--primary" data-book-id="177107">Забронировать</button>
           </div>
         </div>
       </div>
@@ -477,7 +477,7 @@
           </div>
           <div class="card__actions">
             <button class="btn btn--ghost" data-details="monte-karlo">Подробнее</button>
-            <a href="#booking" class="btn btn--primary" data-book="Монте-Карло">Забронировать</a>
+            <button type="button" class="btn btn--primary" data-book-id="177110">Забронировать</button>
           </div>
         </div>
       </div>
@@ -512,7 +512,7 @@
           </div>
           <div class="card__actions">
             <button class="btn btn--ghost" data-details="monako">Подробнее</button>
-            <a href="#booking" class="btn btn--primary" data-book="Монако">Забронировать</a>
+            <button type="button" class="btn btn--primary" data-book-id="228281">Забронировать</button>
           </div>
         </div>
       </div>
@@ -547,7 +547,7 @@
           </div>
           <div class="card__actions">
             <button class="btn btn--ghost" data-details="liliya">Подробнее</button>
-            <a href="#booking" class="btn btn--primary" data-book="Лилия">Забронировать</a>
+            <button type="button" class="btn btn--primary" data-book-id="249949">Забронировать</button>
           </div>
         </div>
       </div>
@@ -582,7 +582,7 @@
           </div>
           <div class="card__actions">
             <button class="btn btn--ghost" data-details="lotos">Подробнее</button>
-            <a href="#booking" class="btn btn--primary" data-book="Лотос">Забронировать</a>
+            <button type="button" class="btn btn--primary" data-book-id="268020">Забронировать</button>
           </div>
         </div>
       </div>
@@ -617,7 +617,7 @@
           </div>
           <div class="card__actions">
             <button class="btn btn--ghost" data-details="kameliya">Подробнее</button>
-            <a href="#booking" class="btn btn--primary" data-book="Камелия">Забронировать</a>
+            <button type="button" class="btn btn--primary" data-book-id="154055">Забронировать</button>
           </div>
         </div>
       </div>
@@ -652,7 +652,7 @@
           </div>
           <div class="card__actions">
             <button class="btn btn--ghost" data-details="magnoliya">Подробнее</button>
-            <a href="#booking" class="btn btn--primary" data-book="Магнолия">Забронировать</a>
+            <button type="button" class="btn btn--primary" data-book-id="154038">Забронировать</button>
           </div>
         </div>
       </div>
@@ -687,7 +687,7 @@
           </div>
           <div class="card__actions">
             <button class="btn btn--ghost" data-details="zhasmin">Подробнее</button>
-            <a href="#booking" class="btn btn--primary" data-book="Жасмин">Забронировать</a>
+            <button type="button" class="btn btn--primary" data-book-id="165638">Забронировать</button>
           </div>
         </div>
       </div>
@@ -722,7 +722,7 @@
           </div>
           <div class="card__actions">
             <button class="btn btn--ghost" data-details="siciliya">Подробнее</button>
-            <a href="#booking" class="btn btn--primary" data-book="Сицилия">Забронировать</a>
+            <button type="button" class="btn btn--primary" data-book-id="154037">Забронировать</button>
           </div>
         </div>
       </div>
@@ -757,7 +757,7 @@
           </div>
           <div class="card__actions">
             <button class="btn btn--ghost" data-details="sofiya">Подробнее</button>
-            <a href="#booking" class="btn btn--primary" data-book="София">Забронировать</a>
+            <button type="button" class="btn btn--primary" data-book-id="154048">Забронировать</button>
           </div>
         </div>
       </div>
@@ -792,7 +792,7 @@
           </div>
           <div class="card__actions">
             <button class="btn btn--ghost" data-details="rio">Подробнее</button>
-            <a href="#booking" class="btn btn--primary" data-book="Рио">Забронировать</a>
+            <button type="button" class="btn btn--primary" data-book-id="154040">Забронировать</button>
           </div>
         </div>
       </div>
@@ -827,7 +827,7 @@
           </div>
           <div class="card__actions">
             <button class="btn btn--ghost" data-details="skandinaviya">Подробнее</button>
-            <a href="#booking" class="btn btn--primary" data-book="Скандинавия">Забронировать</a>
+            <button type="button" class="btn btn--primary" data-book-id="154044">Забронировать</button>
           </div>
         </div>
       </div>
@@ -862,13 +862,22 @@
           </div>
           <div class="card__actions">
             <button class="btn btn--ghost" data-details="moskovskiy-briz">Подробнее</button>
-            <a href="#booking" class="btn btn--primary" data-book="Московский бриз">Забронировать</a>
+            <button type="button" class="btn btn--primary" data-book-id="367051">Забронировать</button>
           </div>
         </div>
       </div>
     </article>
 <!-- STATIC_CARDS_END -->
 </div>
+
+    <div class="catalog-help reveal">
+      <p><b>Не нашли подходящие даты или нужен счёт на юрлицо?</b> Напишите — подскажем по свободным датам и документам, отвечаем в рабочее время 10:00–22:00.</p>
+      <div class="catalog-help__btns">
+        <a class="btn btn--primary" href="https://t.me/+79013490792" target="_blank" rel="noopener">Написать в Telegram</a>
+        <a class="btn btn--ghost" href="https://wa.me/79013490792" target="_blank" rel="noopener">WhatsApp</a>
+        <a class="btn btn--ghost" href="tel:+79013490792">+7 901 349-07-92</a>
+      </div>
+    </div>
   </div>
 </section>
 
@@ -913,72 +922,6 @@
         <span class="benefit__ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 21s-7.5-4.6-9.3-9A5.4 5.4 0 0 1 12 6.2 5.4 5.4 0 0 1 21.3 12c-1.8 4.4-9.3 9-9.3 9z"/></svg></span>
         <h3>Гости возвращаются</h3>
         <p>98% залогов возвращается в день выезда. Мы за долгосрочное сотрудничество, а не разовый доход.</p>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- ================= Командировочным ================= -->
-<section class="section" id="business">
-  <div class="container">
-    <div class="business reveal">
-      <div class="business__inner">
-        <div>
-          <span class="kicker kicker--light">Для командированных</span>
-          <h2 class="h-xl" style="margin-top:14px">Разместим команду сотрудников в одной локации</h2>
-          <p>Работаете с бухгалтерией и отчётностью? Мы подготовим полный комплект закрывающих документов на каждого сотрудника — без хлопот для вас.</p>
-          <ul class="business__list">
-            <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>Чеки с QR-кодом, договоры и акты о проживании</li>
-            <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>Скидки при групповом бронировании и от 7 суток</li>
-            <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>Счета на юрлицо и безналичная оплата по запросу</li>
-          </ul>
-        </div>
-        <div class="business__card">
-          <div class="row"><span>Заезд / выезд</span><b>15:00 / 12:00</b></div>
-          <hr>
-          <div class="row"><span>Залог</span><b>3 000 ₽ — возврат в день выезда</b></div>
-          <hr>
-          <div class="row"><span>Отмена брони</span><b>бесплатно за 7 дней</b></div>
-          <hr>
-          <div class="row"><span>Документы</span><b>включены в стоимость</b></div>
-          <a href="tel:+79013490792" class="btn btn--light btn--wide" style="margin-top:6px">Обсудить размещение команды</a>
-          <a href="https://t.me/+79013490792" target="_blank" rel="noopener" class="btn btn--ghost btn--wide" style="margin-top:10px;color:#fff;border-color:rgba(255,255,255,.4)">Написать в Telegram</a>
-        </div>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- ================= Как забронировать ================= -->
-<section class="section section--tint" id="how">
-  <div class="container">
-    <div class="section__head">
-      <div class="reveal">
-        <span class="kicker">Как это работает</span>
-        <h2 class="h-xl" style="margin-top:14px">Бронирование за 4 шага</h2>
-      </div>
-    </div>
-
-    <div class="steps">
-      <div class="step reveal">
-        <span class="step__num">01</span>
-        <h3>Выберите даты и апартаменты</h3>
-        <p>На сайте — по фото, метражу и цене. Или позвоните нам, поможем с выбором.</p>
-      </div>
-      <div class="step reveal" data-delay="1">
-        <span class="step__num">02</span>
-        <h3>Внесите предоплату</h3>
-        <p>Гарантированная бронь — первые сутки проживания. Бесплатная отмена за 7 дней.</p>
-      </div>
-      <div class="step reveal" data-delay="2">
-        <span class="step__num">03</span>
-        <h3>Пройдите онлайн-заселение</h3>
-        <p>В мессенджере: договор и правила, фото паспорта, оплата остатка и залога. 10–15 минут.</p>
-      </div>
-      <div class="step reveal" data-delay="3">
-        <span class="step__num">04</span>
-        <h3>Заезжайте по коду</h3>
-        <p>Получите персональный код от замка, активный только на время вашего проживания.</p>
       </div>
     </div>
   </div>
@@ -1033,6 +976,72 @@
           <h3>Каширское шоссе, 56к2</h3>
           <p>8 апартаментов в одном доме: удобно для команд. Просторная «Гармония» — 28 м².</p>
           <a class="loc__map" href="https://yandex.ru/maps/?text=Москва, Каширское шоссе, 56к2" target="_blank" rel="noopener">Открыть на карте<span class="loc__map-arrow" aria-hidden="true">↗</span></a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= Как забронировать ================= -->
+<section class="section section--tint" id="how">
+  <div class="container">
+    <div class="section__head">
+      <div class="reveal">
+        <span class="kicker">Как это работает</span>
+        <h2 class="h-xl" style="margin-top:14px">Бронирование за 4 шага</h2>
+      </div>
+    </div>
+
+    <div class="steps">
+      <div class="step reveal">
+        <span class="step__num">01</span>
+        <h3>Выберите даты и апартаменты</h3>
+        <p>На сайте — по фото, метражу и цене. Или позвоните нам, поможем с выбором.</p>
+      </div>
+      <div class="step reveal" data-delay="1">
+        <span class="step__num">02</span>
+        <h3>Внесите предоплату</h3>
+        <p>Гарантированная бронь — первые сутки проживания. Бесплатная отмена за 7 дней.</p>
+      </div>
+      <div class="step reveal" data-delay="2">
+        <span class="step__num">03</span>
+        <h3>Пройдите онлайн-заселение</h3>
+        <p>В мессенджере: договор и правила, фото паспорта, оплата остатка и залога. 10–15 минут.</p>
+      </div>
+      <div class="step reveal" data-delay="3">
+        <span class="step__num">04</span>
+        <h3>Заезжайте по коду</h3>
+        <p>Получите персональный код от замка, активный только на время вашего проживания.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= Командировочным ================= -->
+<section class="section" id="business">
+  <div class="container">
+    <div class="business reveal">
+      <div class="business__inner">
+        <div>
+          <span class="kicker kicker--light">Для командированных</span>
+          <h2 class="h-xl" style="margin-top:14px">Разместим команду сотрудников в одной локации</h2>
+          <p>Работаете с бухгалтерией и отчётностью? Мы подготовим полный комплект закрывающих документов на каждого сотрудника — без хлопот для вас.</p>
+          <ul class="business__list">
+            <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>Чеки с QR-кодом, договоры и акты о проживании</li>
+            <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>Скидки при групповом бронировании и от 7 суток</li>
+            <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>Счета на юрлицо и безналичная оплата по запросу</li>
+          </ul>
+        </div>
+        <div class="business__card">
+          <div class="row"><span>Заезд / выезд</span><b>15:00 / 12:00</b></div>
+          <hr>
+          <div class="row"><span>Залог</span><b>3 000 ₽ — возврат в день выезда</b></div>
+          <hr>
+          <div class="row"><span>Отмена брони</span><b>бесплатно за 7 дней</b></div>
+          <hr>
+          <div class="row"><span>Документы</span><b>включены в стоимость</b></div>
+          <a href="tel:+79013490792" class="btn btn--light btn--wide" style="margin-top:6px">Обсудить размещение команды</a>
+          <a href="https://t.me/+79013490792" target="_blank" rel="noopener" class="btn btn--outline-light btn--wide" style="margin-top:10px">Написать в Telegram</a>
         </div>
       </div>
     </div>
@@ -1151,42 +1160,6 @@
           <li>Продление — при отсутствии следующей брони</li>
         </ul>
         <div class="rules__note">Будем благодарны за квартиру без мусора и грязной посуды</div>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- ================= Бронирование (виджет) ================= -->
-<section class="section booking" id="booking">
-  <div class="container">
-    <div class="section__head">
-      <div class="reveal">
-        <span class="kicker">Онлайн-бронирование</span>
-        <h2 class="h-xl" style="margin-top:14px">Проверьте даты и забронируйте</h2>
-      </div>
-      <p class="lead reveal" data-delay="1">Свободные апартаменты на ваши даты, точные цены со скидками — расчёт мгновенный.</p>
-    </div>
-
-    <div class="booking__hint reveal">
-      <span class="mini">⚡ Мгновенное подтверждение</span>
-      <span class="mini">🔒 Оплата на карте</span>
-      <span class="mini">↩️ Бесплатная отмена за 7 дней</span>
-    </div>
-
-    <div class="booking__frame reveal">
-      <!-- Виджет бронирования Homereserve: подгружается лениво, когда блок приблизился к экрану -->
-      <div id="hr-widget"></div>
-      <noscript>
-        <p class="booking__noscript">Для онлайн-бронирования включите JavaScript или напишите нам в Telegram / WhatsApp — подберём даты и посчитаем стоимость.</p>
-      </noscript>
-    </div>
-
-    <div class="booking__help reveal">
-      <p><b>Не нашли подходящие даты или нужен счёт на юрлицо?</b> Напишите — подскажем по свободным датам и документам, отвечаем в рабочее время 10:00–22:00.</p>
-      <div class="booking__help-btns">
-        <a class="btn btn--primary" href="https://t.me/+79013490792" target="_blank" rel="noopener">Написать в Telegram</a>
-        <a class="btn btn--ghost" href="https://wa.me/79013490792" target="_blank" rel="noopener">WhatsApp</a>
-        <a class="btn btn--ghost" href="tel:+79013490792">+7 901 349-07-92</a>
       </div>
     </div>
   </div>
@@ -1319,6 +1292,11 @@
     <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2a10 10 0 1 0 0 20 10 10 0 0 0 0-20zm.1 5.2c3.34 0 5.71 2.6 5.72 5.86.01 3.27-2.62 5.86-5.94 5.87a6.3 6.3 0 0 1-2.7-.53c-1.2.54-2.97.7-2.86-.28 0-.62.14-1.44.28-2.22a6.03 6.03 0 0 1-.51-2.83c.01-3.27 2.67-5.86 6.01-5.87zm.08 2.36c-1.63-.07-3.16 1.2-3.34 2.94-.1 1.47.65 3.22 2.1 3.37.1.01.26-.03.32-.22.13-.42.43-1.13.64-1.08.44.24 1.06.54 1.69.57 1.7.07 3.22-1.36 3.29-3.07.1-1.7-1.36-3.36-3.09-3.5-.2-.02-.41-.01-.61-.01z"/></svg>
   </a>
 </aside>
+
+<!-- Скрытый виджет Homereserve: только источник официальной модалки бронирования -->
+<div class="hr-widget-shell" aria-hidden="true" inert>
+  <div id="hr-widget"></div>
+</div>
 
 <script src="js/data.js?v=7"></script>
 <script src="js/app.js?v=17"></script>
