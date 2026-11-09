@@ -2084,6 +2084,19 @@ h1, h2, h3, h4 {
 .float-contact .fc-ph { background: var(--pine); color: #fff; }
 .float-contact .fc-max { background: #fff; color: #2B9CF2; border: 1px solid var(--line); }
 
+/* Подсказка, когда сервер бронирования не отвечает */
+.booking-fallback {
+  margin-top: 10px;
+  padding: 10px 14px;
+  background: var(--sand-tint);
+  border-radius: 10px;
+  font-size: 13px;
+  font-weight: 600;
+  color: #7A5A2E;
+}
+
+.booking-fallback a { color: var(--pine); font-weight: 800; text-decoration: underline; text-underline-offset: 2px; }
+
 /* ---------- Анимации появления ---------- */
 
 .reveal {

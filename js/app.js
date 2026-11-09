@@ -693,12 +693,32 @@
     loadHRWidget();
     openHRBooking(apId, 0);
     // возвращаем подпись кнопке, когда модалка открылась (или по таймауту)
+    // Если сервер бронирования не отвечает — вежливый фолбэк с телефонами
+    let hinted = false;
+    const showHint = function () {
+      if (hinted || !btn || !btn.parentElement) return;
+      hinted = true;
+      const box = document.createElement("div");
+      box.className = "booking-fallback";
+      box.innerHTML = 'Сервер бронирования отвечает с задержкой. Позвоните: ' +
+        '<a href="tel:+79013490792">+7 901 349-07-92</a> или напишите в ' +
+        '<a href="https://wa.me/79013490792" target="_blank" rel="noopener">WhatsApp</a>';
+      btn.insertAdjacentElement("afterend", box);
+    };
+    const hideHint = function () {
+      if (btn && btn.parentElement) {
+        const b = btn.parentElement.querySelector(".booking-fallback");
+        if (b) b.remove();
+      }
+    };
     let waited = 0;
     const timer = setInterval(function () {
       waited += 200;
       const m = document.getElementById("hr-modal");
       const visible = m && m.getBoundingClientRect().width > 0 && getComputedStyle(m).display !== "none";
-      if (visible || waited > 15000) { clearInterval(timer); restore(); }
+      if (visible) { clearInterval(timer); restore(); hideHint(); return; }
+      if (waited >= 15000 && !hinted) { restore(); showHint(); }
+      if (waited > 120000) clearInterval(timer);
     }, 200);
   }
 
