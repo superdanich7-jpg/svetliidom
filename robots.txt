@@ -1,0 +1,6 @@
+User-agent: *
+Allow: /
+
+# Юридические страницы закрыты тегом noindex и в sitemap не входят.
+# Боевой домен: https://svetliidom.ru/
+Sitemap: https://svetliidom.ru/sitemap.xml

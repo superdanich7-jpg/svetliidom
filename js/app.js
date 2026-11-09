@@ -33,6 +33,23 @@
 
   const photoUrl = (ap, i) => `images/apartments/${ap.slug}/${i}.jpg`;
 
+  /* Отзывчивые фото: <picture> с WebP (480/960/1600px) и JPG-фолбэком.
+     Ширина/высота заданы, чтобы не было сдвигов вёрстки (CLS). */
+  const photoSrcset = (ap, i, widths) =>
+    widths.map(w => `images/apartments/${ap.slug}/${i}-${w}.webp ${w}w`).join(", ");
+
+  function pictureHTML(ap, i, opts) {
+    const o = opts || {};
+    const widths = o.widths || [480, 960, 1600];
+    const sizes = o.sizes || "(max-width: 640px) 92vw, (max-width: 1100px) 46vw, 380px";
+    const lazy = o.lazy === false ? "" : ' loading="lazy"';
+    const priority = o.priority ? ' fetchpriority="high"' : "";
+    return `<picture>` +
+      `<source type="image/webp" srcset="${photoSrcset(ap, i, widths)}" sizes="${sizes}">` +
+      `<img src="${photoUrl(ap, i)}" alt="${o.alt || `Апартаменты «${ap.name}» — фото ${i}`}"${lazy}${priority} decoding="async" width="2000" height="1334">` +
+      `</picture>`;
+  }
+
   /* ---------- Каталог ---------- */
 
   const cardsRoot = $("#cards");
@@ -49,7 +66,7 @@
 
   function cardHTML(ap) {
     const slides = Array.from({ length: ap.photos }, (_, i) =>
-      `<img src="${photoUrl(ap, i + 1)}" alt="Апартаменты «${ap.name}» — фото ${i + 1}" loading="lazy">`).join("");
+      pictureHTML(ap, i + 1)).join("");
 
     return `
     <article class="card reveal" data-loc="${ap.loc}" data-slug="${ap.slug}">
@@ -113,6 +130,8 @@
     if (statusEl || !filtersRoot) return;
     statusEl = document.createElement("div");
     statusEl.className = "guests-status";
+    statusEl.setAttribute("role", "status");
+    statusEl.setAttribute("aria-live", "polite");
     statusEl.hidden = true;
     filtersRoot.after(statusEl);
     statusEl.addEventListener("click", (e) => {
@@ -155,7 +174,7 @@
       if (!chip) return;
       $$(".chip", filtersRoot).forEach(c => {
         c.classList.toggle("is-active", c === chip);
-        c.setAttribute("aria-selected", c === chip ? "true" : "false");
+        c.setAttribute("aria-pressed", c === chip ? "true" : "false");
       });
       currentLoc = chip.dataset.filter;
       applyFilters();
@@ -213,7 +232,7 @@
     if (!ap) return;
 
     const slides = Array.from({ length: ap.photos }, (_, i) =>
-      `<img src="${photoUrl(ap, i + 1)}" alt="Апартаменты «${ap.name}» — фото ${i + 1}">`).join("");
+      pictureHTML(ap, i + 1, { sizes: "(max-width: 900px) 100vw, 640px" })).join("");
 
     modalGallery.innerHTML = `
       <div class="slider" data-slider>
@@ -285,6 +304,18 @@
     if (e.key === "Escape" && modal.classList.contains("is-open")) closeModal();
   });
 
+  // Фокус-ловушка в модалке: Tab не должен уходить на страницу под ней
+  document.addEventListener("keydown", (e) => {
+    if (e.key !== "Tab" || !modal.classList.contains("is-open")) return;
+    const focusables = $$("a[href], button:not([disabled]), [tabindex]:not([tabindex='-1'])", modal)
+      .filter(el => el.offsetParent !== null);
+    if (!focusables.length) return;
+    const first = focusables[0];
+    const last = focusables[focusables.length - 1];
+    if (e.shiftKey && document.activeElement === first) { e.preventDefault(); last.focus(); }
+    else if (!e.shiftKey && document.activeElement === last) { e.preventDefault(); first.focus(); }
+  });
+
   /* ---------- FAQ ---------- */
 
   $$(".faq__item").forEach(item => {
@@ -310,6 +341,9 @@
   const onScroll = () => {
     const past = (hero ? hero.offsetHeight : 400) - 90;
     header.classList.toggle("header--solid", window.scrollY > past);
+    // На телефонах плавающие контакты не должны перекрывать кнопку
+    // «Подобрать апартаменты» на первом экране — показываем их после скролла.
+    document.body.classList.toggle("floats-visible", window.scrollY > past);
   };
   window.addEventListener("scroll", onScroll, { passive: true });
   onScroll();
@@ -591,6 +625,60 @@
     $("#apartments").scrollIntoView({ behavior: "smooth" });
   });
 
+  /* ---------- Виджет бронирования: отложенная загрузка ---------- */
+  // Модуль Homereserve — единственная тяжёлая внешняя зависимость.
+  // Грузим его только когда пользователь доскроллил близко к блоку
+  // «Онлайн-бронирование» или нажал «Забронировать»: LCP/INP на мобильных
+  // заметно лучше, а сам блок остаётся лениво-инициализированным.
+  const HR_CONFIG = {
+    token: "mIv0zCf1D7",
+    apartments: [211341, 221453, 194491, 194502, 175152, 177107, 177110, 228281,
+      249949, 268020, 154055, 154038, 165638, 154037, 154048, 154040, 154044, 367051, 371097],
+    navigation: false
+  };
+  let hrRequested = false;
+  let hrInited = false;
+
+  function initHR(tries) {
+    if (window.homereserve && window.homereserve.initWidgetList) {
+      window.homereserve.initWidgetList(HR_CONFIG);
+      hrInited = true;
+      startWidgetSweep();
+    } else if (tries < 100) {
+      setTimeout(function () { initHR(tries + 1); }, 150);
+    }
+  }
+
+  function loadHRWidget() {
+    if (hrRequested || hrInited || !document.getElementById("hr-widget")) return;
+    hrRequested = true;
+    const s = document.createElement("script");
+    s.type = "module";
+    s.src = "https://homereserve.ru/widget.js";
+    s.onerror = function () { hrRequested = false; };
+    s.onload = function () { initHR(0); };
+    document.head.appendChild(s);
+  }
+
+  const bookingSection = document.getElementById("booking");
+  if (bookingSection) {
+    if ("IntersectionObserver" in window) {
+      const hrObs = new IntersectionObserver(function (entries) {
+        if (entries.some(function (en) { return en.isIntersecting; })) {
+          hrObs.disconnect();
+          loadHRWidget();
+        }
+      }, { rootMargin: "600px 0px" });
+      hrObs.observe(bookingSection);
+    } else {
+      loadHRWidget();
+    }
+    // мгновенная подгрузка при клике на любую кнопку «Забронировать»
+    document.addEventListener("click", function (e) {
+      if (e.target.closest('[data-book], a[href="#booking"]')) loadHRWidget();
+    }, true);
+  }
+
   /* ---------- Защита от недогруженных фото ---------- */
 
   // Фолбэк для фото ВИДЖЕТА бронирования: если CDN realtycalendar недоступен,
@@ -653,7 +741,6 @@
       if (widgetSweeps > 40 || (!pending && widgetSweeps > 2)) clearInterval(widgetSweepTimer);
     }, 2500);
   }
-  startWidgetSweep();
 
 
   /* ---------- Появление при скролле ---------- */

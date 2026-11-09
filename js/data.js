@@ -5,6 +5,7 @@ const SITE = {
   phone: "+7 901 349-07-92",
   phoneRaw: "+79013490792",
   whatsapp: "https://wa.me/79013490792",
+  telegram: "https://t.me/+79013490792",
   max: "https://max.ru/u/f9LHodD0cOJNkW-JemsRFSz0se-nJU8LJxaXXSZ8wQe9YVMer47oV98mtPc",
   vk: "https://vk.com/svetliidom_aparts",
   deposit: 3000
